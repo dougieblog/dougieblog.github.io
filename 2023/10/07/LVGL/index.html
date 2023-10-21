@@ -20,17 +20,17 @@
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta name="description" content="1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an object with lv_obj_set_parent(obj">
+  <meta name="description" content="1tittle: &quot;LVGL笔记&quot;    1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an ob">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://dougieblog.github.io/2023/10/07/LVGL/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an object with lv_obj_set_parent(obj">
+<meta property="og:description" content="1tittle: &quot;LVGL笔记&quot;    1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an ob">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="c:\Users\86182\Desktop\pit\image-20231006232011505.png">
 <meta property="og:image" content="http://dougieblog.github.io/pit/image-20231008180545688.png">
 <meta property="article:published_time" content="2023-10-06T16:11:16.518Z">
-<meta property="article:modified_time" content="2023-10-10T11:46:09.978Z">
+<meta property="article:modified_time" content="2023-10-21T16:08:05.805Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:\Users\86182\Desktop\pit\image-20231006232011505.png">
@@ -192,14 +192,18 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            7.2k words 
+            7.3k words 
           </div>
         </div>
         
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <h1 id="1-对象"><a href="#1-对象" class="headerlink" title="1.对象"></a>1.对象</h1><h6 id="1-父对象对其：lv-obj-set-align-对象，模式"><a href="#1-父对象对其：lv-obj-set-align-对象，模式" class="headerlink" title="1.父对象对其：lv_obj_set_align(对象，模式)"></a>1.父对象对其：lv_obj_set_align(对象，模式)</h6><h6 id="2-lv-obj-center-对象-关于它的父亲中心对其"><a href="#2-lv-obj-center-对象-关于它的父亲中心对其" class="headerlink" title="2.lv_obj_center(对象)关于它的父亲中心对其"></a>2.lv_obj_center(对象)关于它的父亲中心对其</h6><h6 id="2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y"><a href="#2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y" class="headerlink" title="2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)"></a>2.要将一个对象与另一个对象对齐，请使用：<code>lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)</code></h6><h6 id="3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj"><a href="#3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj" class="headerlink" title="3.You can set a new parent for an object with lv_obj_set_parent(obj, new_parent). To get the current parent, use lv_obj_get_parent(obj)."></a>3.You can set a new parent for an object with <code>lv_obj_set_parent(obj, new_parent)</code>. To get the current parent, use <code>lv_obj_get_parent(obj)</code>.</h6><h6 id="4-lv-obj-get-child-parent-idx-返回它是第几个孩子"><a href="#4-lv-obj-get-child-parent-idx-返回它是第几个孩子" class="headerlink" title="4.lv_obj_get_child(parent, idx)返回它是第几个孩子"></a>4.lv_obj_get_child(parent, idx)返回它是第几个孩子</h6><ul>
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tittle: &quot;LVGL笔记&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="1-对象"><a href="#1-对象" class="headerlink" title="1.对象"></a>1.对象</h1><h6 id="1-父对象对其：lv-obj-set-align-对象，模式"><a href="#1-父对象对其：lv-obj-set-align-对象，模式" class="headerlink" title="1.父对象对其：lv_obj_set_align(对象，模式)"></a>1.父对象对其：lv_obj_set_align(对象，模式)</h6><h6 id="2-lv-obj-center-对象-关于它的父亲中心对其"><a href="#2-lv-obj-center-对象-关于它的父亲中心对其" class="headerlink" title="2.lv_obj_center(对象)关于它的父亲中心对其"></a>2.lv_obj_center(对象)关于它的父亲中心对其</h6><h6 id="2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y"><a href="#2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y" class="headerlink" title="2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)"></a>2.要将一个对象与另一个对象对齐，请使用：<code>lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)</code></h6><h6 id="3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj"><a href="#3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj" class="headerlink" title="3.You can set a new parent for an object with lv_obj_set_parent(obj, new_parent). To get the current parent, use lv_obj_get_parent(obj)."></a>3.You can set a new parent for an object with <code>lv_obj_set_parent(obj, new_parent)</code>. To get the current parent, use <code>lv_obj_get_parent(obj)</code>.</h6><h6 id="4-lv-obj-get-child-parent-idx-返回它是第几个孩子"><a href="#4-lv-obj-get-child-parent-idx-返回它是第几个孩子" class="headerlink" title="4.lv_obj_get_child(parent, idx)返回它是第几个孩子"></a>4.lv_obj_get_child(parent, idx)返回它是第几个孩子</h6><ul>
 <li><code>0</code> get the child created first</li>
 <li><code>1</code> get the child created second</li>
 <li><code>-1</code> get the child created last</li>
