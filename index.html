@@ -236,7 +236,7 @@ More info: Deployment
    
 
 
-<article id="post-1.父对象对其：lv_obj_set_align(对象，模式)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+<article id="post-LVGL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
    
   <div class="article-inner">
     <div class="article-main">
@@ -247,7 +247,7 @@ More info: Deployment
   
     
       <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/10/07/1.%E7%88%B6%E5%AF%B9%E8%B1%A1%E5%AF%B9%E5%85%B6%EF%BC%9Alv_obj_set_align(%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%A8%A1%E5%BC%8F)/">Untitled</a>
+        <a class="p-name article-title" href="/2023/10/07/LVGL/">Untitled</a>
       </h1>
     
   
@@ -294,7 +294,78 @@ More info: Deployment
      
     <a class="right-panel  non-pic  "
       
-      href="/2023/10/07/1.%E7%88%B6%E5%AF%B9%E8%B1%A1%E5%AF%B9%E5%85%B6%EF%BC%9Alv_obj_set_align(%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%A8%A1%E5%BC%8F)/" 
+      href="/2023/10/07/LVGL/" 
+    >
+       
+      <i class="fa-solid fa-angle-right non-pic"></i>
+       
+    </a>
+     
+  </div>
+  
+</article>
+
+
+
+
+
+   
+
+
+<article id="post-pid" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 itemprop="name">
+        <a class="p-name article-title" href="/2023/10/03/pid/">Untitled</a>
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-10-02T18:33:18.236Z" itemprop="datePublished">2023-10-03</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            6.4k words 
+          </div>
+        </div>
+        
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <div class="truncate-text">
+            
+              1.代码总概括如下​		这是多级pid，适合与路况复杂的情况，以及循迹模块多路（至少大于等于5个）一般跑圆圈，不需要这么复杂，可以不考虑多级。
+代码如下。注意代码不全，以及双环方式是错的，所以看看就行，KI，Kp为了方便调试，可以是不能放函数内的，当然前提是你有上位机能蓝牙调参，代码是很久之前写的，请不要照搬。
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110void car_3(float real_speed_L , float real_speed_R,float target_speed , uint8_t search_Date)&#123;	float S_KP = 30 , S...
+            
+          </div>
+        
+      </div>
+
+         
+    </div>
+    
+     
+    <a class="right-panel  non-pic  "
+      
+      href="/2023/10/03/pid/" 
     >
        
       <i class="fa-solid fa-angle-right non-pic"></i>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="1.代码总概括如下​		这是多级pid，适合与路况复杂的情况，以及循迹模块多路（至少大于等于5个）一般跑圆圈，不需要这么复杂，可以不考虑多级。 代码如下。注意代码不全，以及双环方式是错的，所以看看就行，KI，Kp为了方便调试，可以是不能放函数内的，当然前提是你有上位机能蓝牙调参，代码是很久之前写的，请不要照搬。 1234567891011121314151617181920212223242526">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://dougieblog.github.io/2023/10/03/pid/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.代码总概括如下​		这是多级pid，适合与路况复杂的情况，以及循迹模块多路（至少大于等于5个）一般跑圆圈，不需要这么复杂，可以不考虑多级。 代码如下。注意代码不全，以及双环方式是错的，所以看看就行，KI，Kp为了方便调试，可以是不能放函数内的，当然前提是你有上位机能蓝牙调参，代码是很久之前写的，请不要照搬。 1234567891011121314151617181920212223242526">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-02T18:33:18.236Z">
+<meta property="article:modified_time" content="2023-10-02T18:33:18.350Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="https://DOUGIE2111.github.io/pic/110116673_p0.jpg" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="shadow   ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Hexo </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=https://DOUGIE2111.github.io/pic/Cache_-205a8daf8a9748d2..jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">Dougie </div>
+      <div class="dot"></div>
+      <div class="subtitle">This is the subtitle </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/1540613272" title="bilibili"><i class="fa-brands fa-bilibili"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62988331?type=blog" title="CSDN"><i class="fa-solid fa-blog"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/DOUGIE2111" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+
+    
+      
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-pid" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        Untitled
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-10-02T18:33:18.236Z" itemprop="datePublished">2023-10-03</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            6.4k words 
+          </div>
+        </div>
+        
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="1-代码总概括如下"><a href="#1-代码总概括如下" class="headerlink" title="1.代码总概括如下"></a>1.代码总概括如下</h1><p>​		这是<strong>多级pid</strong>，适合与路况复杂的情况，以及循迹模块多路（至少大于等于5个）一般跑圆圈，不需要这么复杂，可以不考虑多级。</p>
+<p>代码如下。<strong>注意代码不全</strong>，以及<strong>双环方式是错的</strong>，所以看看就行，KI，Kp为了方便调试，可以是不能放函数内的，当然前提是你有上位机能蓝牙调参，代码是很久之前写的，请<strong>不要照搬</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">void car_3(float real_speed_L , float real_speed_R,float target_speed , uint8_t search_Date)</span><br><span class="line">&#123;</span><br><span class="line">	float S_KP = 30 , S_KI = 15 ;</span><br><span class="line">	float P_KP = 60, P_KD = 40 ;</span><br><span class="line">	int out_left, out_right;</span><br><span class="line">	int last_out_left , last_out_right ;</span><br><span class="line">	float error ;  //左偏为正右偏为负</span><br><span class="line">	float last_error ;</span><br><span class="line">	//左右两边的速度误差</span><br><span class="line">	float D_error = 0;</span><br><span class="line">	float speed_error_L = 0;</span><br><span class="line">	float speed_error_R = 0;</span><br><span class="line">	float D_speed_error_L = 0;</span><br><span class="line">	float D_speed_error_R = 0;</span><br><span class="line">	static int flag=0;</span><br><span class="line">	if(flag == 0)</span><br><span class="line">	&#123;</span><br><span class="line">			SPEED_CHANGE(2000,2000);</span><br><span class="line">	    tb_delay_ms(600);</span><br><span class="line">		  flag=1;</span><br><span class="line">	&#125;</span><br><span class="line">   if(search_Date == 0xef || search_Date == 0xf7 ||search_Date == 0xe7)  //中间两个位置</span><br><span class="line">		 error = 0;</span><br><span class="line">	 if(search_Date == 0xdf) // 左偏第3个灯</span><br><span class="line">     error = 2.6;</span><br><span class="line">	 if(search_Date == 0xcf) //左偏第三个与中间</span><br><span class="line">		 error = 4.8;</span><br><span class="line">	 if(search_Date == 0xfb) // 右偏第3个灯</span><br><span class="line">		 error = -2.6;</span><br><span class="line">	 if(search_Date == 0xf3) //右偏第三个与中间</span><br><span class="line">		 error = -4.8;</span><br><span class="line">	 if(search_Date == 0xbf ) // 左偏第2个灯</span><br><span class="line">		 error = 6.2;</span><br><span class="line">	 if(search_Date == 0xfd ) // 右偏第2个灯</span><br><span class="line">     error = -6.2;</span><br><span class="line">	 if(search_Date == 0x9f)  //左偏第2，3灯</span><br><span class="line">		 error =8;</span><br><span class="line">	 if(search_Date == 0xf9)  //右偏第2，3灯</span><br><span class="line">		 error = -8;</span><br><span class="line">	 if(search_Date == 0x7f) // 左偏第一个灯</span><br><span class="line">		 error = 12.8 ;</span><br><span class="line">	 if(search_Date == 0xfe) // 右偏第一个灯</span><br><span class="line">		 error = -12.8 ;        </span><br><span class="line">	 	 if(search_Date == 0x3f) // 左偏第一二个灯</span><br><span class="line">		 error =10.6 ;</span><br><span class="line">	 if(search_Date == 0xfc) // 右偏第一二个灯</span><br><span class="line">		 error = -10.6 ;   </span><br><span class="line">   if(search_Date == 0x00) // 十字路口的情况</span><br><span class="line">		 SPEED_CHANGE(last_out_left,last_out_right);</span><br><span class="line">	 if(search_Date == 0x0f||search_Date == 0x07)&#123; // 左转的情况</span><br><span class="line">		 SPEED_CHANGE(0,0);</span><br><span class="line">		 tb_delay_ms(150);</span><br><span class="line">     SPEED_CHANGE(last_out_left,0);</span><br><span class="line">		 tb_delay_ms(800);</span><br><span class="line">	 &#125;</span><br><span class="line">	 if(search_Date == 0xff)</span><br><span class="line">		 speed_set(0,0);</span><br><span class="line">	 if(search_Date == 0xf0)&#123; // 右转的情况</span><br><span class="line">		 SPEED_CHANGE(0,0);</span><br><span class="line">		 tb_delay_ms(150);</span><br><span class="line">     SPEED_CHANGE(0,last_out_right);</span><br><span class="line">		 tb_delay_ms(800);</span><br><span class="line">	 &#125;</span><br><span class="line">	 else </span><br><span class="line">		 speed_set(last_out_left,last_out_right);</span><br><span class="line">	 speed_error_L = (target_speed - real_speed_L)*90;</span><br><span class="line">	 speed_error_R = (target_speed - real_speed_R)*90;</span><br><span class="line">	 D_error = error - last_error;</span><br><span class="line">	 D_speed_error_L += speed_error_L;</span><br><span class="line">	 D_speed_error_R += speed_error_R ;</span><br><span class="line">	     </span><br><span class="line">	 		 	 if(error &lt; 0 &amp;&amp; search_Date == 0xfe)</span><br><span class="line">		 &#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">			 out1 = 0 - out2 *0.162;</span><br><span class="line">		 &#125;</span><br><span class="line">		 </span><br><span class="line">		 		 if(error &gt; 0 &amp;&amp; search_Date == 0x7f)</span><br><span class="line">		 &#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">			 out2 = 0 - out1 *0.162;</span><br><span class="line">		 &#125;</span><br><span class="line">		     if(search_Date == 0x3f &amp;&amp; error&gt;0)&#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">			 out2 = 0 - out1 *0.846;</span><br><span class="line">				 &#125;</span><br><span class="line">	       if(search_Date == 0xfc &amp;&amp; error&lt;0) &#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">			 out1 = 0 - out2 *0.846;			 </span><br><span class="line">				 &#125;</span><br><span class="line">		  </span><br><span class="line">				 if(error &gt; 0)</span><br><span class="line">		 &#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">		 &#125;</span><br><span class="line"></span><br><span class="line">		 	   if(error &lt; 0)</span><br><span class="line">		 &#123;</span><br><span class="line">	 out1 = P_KP * error   +  P_KD * D_error   +  S_KP * speed_error_L   +  S_KI * D_speed_error_L   ;</span><br><span class="line">	 out2 = S_KP * speed_error_R   +  S_KI * D_speed_error_R - P_KP * error   -  P_KD * D_error  ;</span><br><span class="line">		 &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">	 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-函数"><a href="#2-函数" class="headerlink" title="2.函数"></a>2.函数</h2><h3 id="2-1输入参数"><a href="#2-1输入参数" class="headerlink" title="2.1	输入参数"></a>2.1	输入参数</h3><p>​	因为是<strong>单环</strong>所以反馈只需一个，输入的参数为<strong>search_Date</strong>，也就是你</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sw_i2c_read_byte(&amp;i2c_interface, 0x4C &lt;&lt; 1, &amp;digital_data); // digital_data 有1~8号探头开关数据		</span><br></pre></td></tr></table></figure>
+
+<p>函数的输出值，因为是u8所以也就是<strong>8bit</strong>，用十六进制数据所以上面代码区分情况是如下判断</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(search_Date == 0xdf) // 左偏第3个灯</span><br></pre></td></tr></table></figure>
+
+<p>通过把<strong>16进制数转换为2进制</strong>就可以得出，每个循迹模块的情况。  <strong>0xdf</strong> &#x3D; 1101_1111 也就是左边第三个是黑线</p>
+<h1 id="注意：需要自行判断高位是左还是右边。"><a href="#注意：需要自行判断高位是左还是右边。" class="headerlink" title="注意：需要自行判断高位是左还是右边。"></a><strong>注意</strong>：需要自行判断高位是左还是右边。</h1><p>因为不需要考虑速度的问题我们可以不用考虑。</p>
+<h3 id="2-2输出参数"><a href="#2-2输出参数" class="headerlink" title="2.2输出参数"></a>2.2输出参数</h3><p>​	输出的值为什么呢？是由PID计算出的<strong>占空比的值</strong>，这个值与一个我们给定的速度<strong>相加</strong>就可以得到需要设置的值，比如要左转，（假设总占空比为1000）我们设置的初始占空比500，500，pid会计算出一个差速值，左轮500+（-100），右轮500+100，这个值分两种情况，达到想要的效果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float error ;  //左偏为正右偏为负</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-如何写呢？"><a href="#3-如何写呢？" class="headerlink" title="3.如何写呢？"></a>3.如何写呢？</h3><p>​	<strong>函数名</strong>设置如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void search_car(uint8_t search_Date)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-1PI还是PD"><a href="#3-1PI还是PD" class="headerlink" title="3.1	PI还是PD?"></a>3.1	PI还是PD?</h4><p>​	<strong>PD更适合。</strong></p>
+<p><strong>微分（D）</strong> 控制器用于减小系统的超调和振荡。它考虑误差变化的速度，如果误差迅速变化，微分控制会产生一个控制输出，以抑制快速变化。</p>
+<p><strong>积分（I）</strong> 控制器用于消除系统的稳态误差。它考虑了误差的积累，如果系统长时间保持误差，则积分控制会产生一个控制输出，以减小积累的误差。</p>
+<p>当然可以加入I，设置的值要很小或者加入钳，将数值钳在一个范围，不如参数调的不好会让系统不稳定。为了<strong>减轻调参难度</strong>，只用<strong>PD</strong>。</p>
+<h3 id="3-2继续写"><a href="#3-2继续写" class="headerlink" title="3.2继续写"></a>3.2继续写</h3><p>​		定义KP和KD，float调参更适合</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> KP = <span class="number">0</span> , KD = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​		还需要一个什么？<strong>Error</strong>，也就上面提到的实现差速的参数。float int 都行，推荐float</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> Error = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​		还需要D_last_Error,KD有个值为上一次参数减去下一次参数的值。这个值要被用所以我们再设置一个D_Error;</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> D_last_Error = <span class="number">0</span>;</span><br><span class="line"><span class="type">float</span> D_Error = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​		还需要两个参数也就是你需要的占空比和pid输出的占空比。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> L_PD_vlaue = <span class="number">0</span>;  <span class="comment">//PD计算的差速值</span></span><br><span class="line"><span class="type">int</span> R_PD_vlaue = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> L_speed = <span class="number">0</span>;     <span class="comment">//你想要这车跑的速度也就是占空比，不建议太大，也不建议过慢，因为你题目有速度要求</span></span><br><span class="line"><span class="type">int</span> L_speed = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​		<em><strong>进入正题</strong></em></p>
+<p>​						根据你<strong>黑带的宽度</strong>和你<strong>循迹模块在上面的情况</strong>来判断你怎么写。</p>
+<p>​						根据你<strong>黑带的宽度</strong>和你<strong>循迹模块在上面的情况</strong>来判断你怎么写。</p>
+<p>​						根据你<strong>黑带的宽度</strong>和你<strong>循迹模块在上面的情况</strong>来判断你怎么写。</p>
+<p>so 我讲解的情况<strong>没有普适性</strong></p>
+<h4 id="！！！注意：-以下代码左偏-Error为正-，反之为负。"><a href="#！！！注意：-以下代码左偏-Error为正-，反之为负。" class="headerlink" title="！！！注意：&#x2F;&#x2F;*以下代码左偏,Error为正*，反之为负。"></a>！！！注意：&#x2F;&#x2F;<em><strong><strong>*<em><strong><strong><strong>以下代码</strong></strong>左偏,Error为正</strong></em>*，反之为</strong></strong>负。</em></h4><h3 id="左边的0其实真实情况在右边"><a href="#左边的0其实真实情况在右边" class="headerlink" title="左边的0其实真实情况在右边"></a>左边的0其实真实情况在右边</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(search_Date == <span class="number">0xef</span> || search_Date == <span class="number">0xf7</span> ||search_Date == <span class="number">0xe7</span>)  <span class="comment">//中间两个位置</span></span><br><span class="line">Error = <span class="number">0</span>；</span><br></pre></td></tr></table></figure>
+
+<p><strong>0xef</strong> &#x3D; 1110_1111      		<strong>0xf7</strong> &#x3D; 1111_0111 			<strong>0xe7</strong> &#x3D; 1110_0111</p>
+<p>上面也就是亮灯情况，右偏一点，左偏一点，以及中间两个都在黑带上我们都不考虑。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(search_Date == <span class="number">0xcf</span>) <span class="comment">//左偏第三个与中间</span></span><br><span class="line"> error = <span class="number">4.8</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>0xcf</strong> &#x3D; 1100_1111		这和上面ef的情况就是左偏了，两个灯亮起，相比与 <strong>0xdf</strong> &#x3D; 1101_1111，偏离的较多。</p>
+<p>也就是对于<strong>偏差</strong>来说				 <strong>0xcf  &gt;  0xdf</strong>        </p>
+<p>也就是可以看到我上面代码error相比更小了。想不明白建议脑部以下，两个灯在黑带和只有</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(search_Date == <span class="number">0xdf</span>) <span class="comment">// 左偏第3个灯</span></span><br><span class="line">   error = <span class="number">2.6</span>;</span><br></pre></td></tr></table></figure>
+
+<p>对于相反<strong>右偏</strong>就把值设置为相反的<strong>带负号</strong>就行</p>
+<h1 id="进入pd之前把参数弄好"><a href="#进入pd之前把参数弄好" class="headerlink" title="进入pd之前把参数弄好"></a>进入pd之前把参数弄好</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D_Error = Error - D_last_error;  <span class="comment">//得到D所需要的参数</span></span><br><span class="line">last_error = Error <span class="comment">//把这次的值赋给上一次last参数，下一次减去就是这次减去上次的值Error - D_last_Error</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="进入pd"><a href="#进入pd" class="headerlink" title="进入pd"></a>进入pd</h4><p>我们要考虑两种情况一个是error大于0和小于0.因为<strong>我的前提是左偏为正右偏为负</strong>。so</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Error &gt; <span class="number">0</span>)     <span class="comment">//大于0左偏的话，那么我们需要左边慢右边快，所以左-，右+</span></span><br><span class="line">&#123;</span><br><span class="line">L_PD_vlaue = -P_KP * error   - P_KD * D_error  ;</span><br><span class="line">R_PD_vlaue = P_KP * error   +  P_KD * D_error  ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反之</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Error &lt; <span class="number">0</span>)    <span class="comment">//小于0右偏的话，那么我们需要右边慢左边快，所以左+，右-，但是error小于0所以</span></span><br><span class="line">&#123;</span><br><span class="line">L_PD_vlaue = -P_KP * error   - P_KD * D_error  ;</span><br><span class="line">R_PD_vlaue = P_KP * error   +  P_KD * D_error  ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这下你就看出来了，其实可以写一起对吧，<strong>所也就是不需要判断</strong>。</p>
+<p>这样就行，当然前提是<strong>左偏为正右偏为负</strong>，如果取相反的就<strong>反过来</strong>就行了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">L_PD_vlaue = -P_KP * error   - P_KD * D_error  ;</span><br><span class="line">R_PD_vlaue = P_KP * error   +  P_KD * D_error  ;</span><br></pre></td></tr></table></figure>
+
+<p>这样可以得到PD算出来的值</p>
+<h2 id="进入尾声"><a href="#进入尾声" class="headerlink" title="进入尾声"></a>进入尾声</h2><p> 添加入你的设置速度的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">speed_set( L_PD_vlaue  +  L_speed , R_PD_vlaue  +  R_speed ) ;</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以加一个参数,在定义参数的地方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> L_set_value = <span class="number">0</span> , R_set_value = <span class="number">0</span> ;</span><br></pre></td></tr></table></figure>
+
+<p>然后下面函数结尾的时候</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L_set_value = L_PD_vlaue   +  L_speed;</span><br><span class="line">R_set_value = R_PD_vlaue   +  R_speed;</span><br><span class="line">speed_set (L_set_value , R_set_value );  <span class="comment">//类似这样，可能简洁一点</span></span><br></pre></td></tr></table></figure>
+
+<p>贴一下我的speed_set函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int Spendl_limit(int *speed)               //限幅函数，pwm_max也就是计数值最大的范围值 用的指针又是int return所以会</span><br><span class="line">										   //改变指针所指向数的地址的值</span><br><span class="line">&#123;</span><br><span class="line">	if(*speed&gt;PWM_MAX)  *speed=PWM_MAX;</span><br><span class="line">	if(*speed&lt;PWM_MIN)  *speed=PWM_MIN;</span><br><span class="line">	return *speed;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void speed_set(int out1 ,int out2)  //我的是TB6612,更具直接的情况写 SPEED_CHANGE函数。</span><br><span class="line">&#123;</span><br><span class="line"> Spendl_limit(&amp;out1);</span><br><span class="line"> Spendl_limit(&amp;out2);</span><br><span class="line"> SPEED_CHANGE(out1,out2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="注意的是你的speed-set左边的值是不是设置左轮的，顺序不能乱了；"><a href="#注意的是你的speed-set左边的值是不是设置左轮的，顺序不能乱了；" class="headerlink" title="注意的是你的speed_set左边的值是不是设置左轮的，顺序不能乱了；"></a>注意的是你的speed_set左边的值是不是设置左轮的，顺序不能乱了；</h2><p>大体就是这样，</p>
+<p>KP和KD的值需要自己去设置，然后error的大小也是需要自己的设置的，建议不要用等差的值，偏的越大差值也增大，比如左偏1，error为1，偏离2的时候为2.2，偏离3的时候为3.5 ……这样。如果你的error很大，P值就要设置小一些，如果P值很大就error设置小一些。</p>
+<p>如何判断是否设置很大，你先找到你的占空比值的最大范围，也就是你tim的计数值的上限是多少，然后代入任意一个error的值，进去计算一下，了解下值的大小是否合适。不合适就要改，或者直接上小车跑一下试试。</p>
+<h4 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h4><p>首先加入P值，再加入D值，看情况给值，因为你没有上位机分析电机转速的变换，所以靠感觉来调参。当这个值还不错的时候，P和D都乘以0.7，能让这个系统更稳定。</p>
+<h4 id="情况分析"><a href="#情况分析" class="headerlink" title="情况分析"></a>情况分析</h4><p>如果拐弯拐不过去就，看情况分析一下，如果<strong>小角度的过得去</strong>就<strong>不要改p</strong>，如果<strong>小角度都失败</strong>了<strong>就去改p</strong>。</p>
+<p>遇到大角度过不去，把它那种情况的error值加大，这样就不会影响整体的PD变换。只会影响局部的。</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/2023/10/07/LVGL/"
+      title=""
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        (No Title)
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right  disabled "
+     >
+
+    <p class="title-text">
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2023 Dougie<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
