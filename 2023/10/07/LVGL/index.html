@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an object with lv_obj_set_parent(obj">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\86182\Desktop\pit\image-20231006232011505.png">
+<meta property="og:image" content="https://dougie2111.github.io/pic/image-20231006232011505.png">
 <meta property="og:image" content="https://dougie211.me/pit/image-20231008180545688.png">
 <meta property="article:published_time" content="2023-10-06T16:11:16.518Z">
-<meta property="article:modified_time" content="2023-10-21T17:01:47.648Z">
+<meta property="article:modified_time" content="2023-10-27T07:47:06.017Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="LVGL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\86182\Desktop\pit\image-20231006232011505.png">
+<meta name="twitter:image" content="https://dougie2111.github.io/pic/image-20231006232011505.png">
   
   
     <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
@@ -155,7 +155,7 @@
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">Tags</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/LVGL/" rel="tag">LVGL</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/ESP32-stm32%E8%BF%87%E6%B8%A1/" rel="tag">ESP32 stm32过渡</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/LVGL/" rel="tag">LVGL</a></li></ul>
     </div>
   </div>
 
@@ -214,7 +214,7 @@
 <li><code>1</code> get the child created second</li>
 <li><code>-1</code> get the child created last</li>
 </ul>
-<p>对其的模式<br><img src="C:\Users\86182\Desktop\pit\image-20231006232011505.png" alt="image-20231006232011505"></p>
+<p>对其的模式<br><img src="https://dougie2111.github.io/pic/image-20231006232011505.png" alt="image-20231006232011505"></p>
 <h1 id="2-颜色"><a href="#2-颜色" class="headerlink" title="2.颜色"></a>2.颜色</h1><p>区别：add是有mode的，set无；</p>
 <h6 id="1-颜色lv-obj-set-style-bg-color-对象-lv-color-hex-16bit颜色-状态（LV-STATE-PRESSED）-设置部件的样式"><a href="#1-颜色lv-obj-set-style-bg-color-对象-lv-color-hex-16bit颜色-状态（LV-STATE-PRESSED）-设置部件的样式" class="headerlink" title="1.颜色lv_obj_set_style_bg_color(对象,lv_color_hex(16bit颜色),状态（LV_STATE_PRESSED）);&#x2F;&#x2F;设置部件的样式"></a>1.颜色lv_obj_set_style_bg_color(对象,lv_color_hex(16bit颜色),状态（LV_STATE_PRESSED）);&#x2F;&#x2F;设置部件的样式</h6><h6 id="2-lv-color-hex（颜色）参数填入颜色转化为所选的颜色编码"><a href="#2-lv-color-hex（颜色）参数填入颜色转化为所选的颜色编码" class="headerlink" title="2.lv_color_hex（颜色）参数填入颜色转化为所选的颜色编码"></a>2.lv_color_hex（颜色）参数填入颜色转化为所选的颜色编码</h6><h6 id="3-lv-obj-add-style-对象-全局style-状态"><a href="#3-lv-obj-add-style-对象-全局style-状态" class="headerlink" title="3.	lv_obj_add_style(对象,全局style,状态);"></a>3.	lv_obj_add_style(对象,全局style,状态);</h6><p>代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">lv_style_t</span> mode1;  <span class="comment">//定义颜色结构体</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">style_set</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">lv_style_init(&amp;mode1); <span class="comment">//初始化</span></span><br><span class="line">lv_style_set_bg_color(&amp;mode1,lv_color_hex(<span class="number">0xdea0fe</span>));   <span class="comment">//给其定义颜色</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
