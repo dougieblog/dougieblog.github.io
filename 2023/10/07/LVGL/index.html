@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+  <html theme="light" showBanner="true" hasBanner="true">
+
+  <head>
+    <!-- 引入 APlayer 和 MetingJS -->
+    <link rel="stylesheet" href="https://unpkg.com/aplayer/dist/APlayer.min.css">
+    <script src="https://unpkg.com/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://unpkg.com/meting@2.0.1/dist/Meting.min.js"></script>
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+    <script src="/js/color.global.min.js"></script>
+    <script src="/js/load-settings.js"></script>
+    <head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>LVGL笔记 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an object with lv_obj_set_parent(obj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVGL笔记">
+<meta property="og:url" content="https://dougie211.me/2023/10/07/LVGL/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.对象1.父对象对其：lv_obj_set_align(对象，模式)2.lv_obj_center(对象)关于它的父亲中心对其2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)3.You can set a new parent for an object with lv_obj_set_parent(obj">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://dougie2111.github.io/pic/image-20231006232011505.png">
+<meta property="og:image" content="https://dougie211.me/pit/image-20231008180545688.png">
+<meta property="article:published_time" content="2023-10-06T16:11:16.518Z">
+<meta property="article:modified_time" content="2024-09-25T14:46:51.555Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="LVGL">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dougie2111.github.io/pic/image-20231006232011505.png">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  </head>
+
+  <body>
+    
+          
+            
+<div id="banner" class="">
+  <img src="https://s1.imagehub.cc/images/2024/09/19/8c368fbbc370966502f41fddbb39102e.png" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+
+              
+                <div id="main-grid" class="">
+                    <div id="nav" class="">
+                      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Hexo </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+                    </div>
+                    <div id="sidebar-wrapper">
+                      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=https://DOUGIE2111.github.io/pic/Cache_-205a8daf8a9748d2..jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">Dougie </div>
+      <div class="dot"></div>
+      <div class="subtitle">This is the subtitle </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/3546648428939813" title="bilibili"><i class="fa-brands fa-bilibili"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62988331?type=blog" title="CSDN"><i class="fa-solid fa-blog"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/DOUGIE2111" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/LVGL/" rel="tag">LVGL</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/WiFi/" rel="tag">WiFi</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/esp32/" rel="tag">esp32</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+                    </div>
+                    <div id="content-body">
+                       
+
+
+<article id="post-LVGL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        LVGL笔记
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-10-06T16:11:16.518Z" itemprop="datePublished">2023-10-07</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            7.2k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LVGL/" rel="tag">LVGL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h1 id="1-对象"><a href="#1-对象" class="headerlink" title="1.对象"></a>1.对象</h1><h6 id="1-父对象对其：lv-obj-set-align-对象，模式"><a href="#1-父对象对其：lv-obj-set-align-对象，模式" class="headerlink" title="1.父对象对其：lv_obj_set_align(对象，模式)"></a>1.父对象对其：lv_obj_set_align(对象，模式)</h6><h6 id="2-lv-obj-center-对象-关于它的父亲中心对其"><a href="#2-lv-obj-center-对象-关于它的父亲中心对其" class="headerlink" title="2.lv_obj_center(对象)关于它的父亲中心对其"></a>2.lv_obj_center(对象)关于它的父亲中心对其</h6><h6 id="2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y"><a href="#2-要将一个对象与另一个对象对齐，请使用：lv-obj-align-to-需要对其的对象-（基准对象）-（对其模式）-x-y" class="headerlink" title="2.要将一个对象与另一个对象对齐，请使用：lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)"></a>2.要将一个对象与另一个对象对齐，请使用：<code>lv_obj_align_to((需要对其的对象), （基准对象）, （对其模式）, x, y)</code></h6><h6 id="3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj"><a href="#3-You-can-set-a-new-parent-for-an-object-with-lv-obj-set-parent-obj-new-parent-To-get-the-current-parent-use-lv-obj-get-parent-obj" class="headerlink" title="3.You can set a new parent for an object with lv_obj_set_parent(obj, new_parent). To get the current parent, use lv_obj_get_parent(obj)."></a>3.You can set a new parent for an object with <code>lv_obj_set_parent(obj, new_parent)</code>. To get the current parent, use <code>lv_obj_get_parent(obj)</code>.</h6><h6 id="4-lv-obj-get-child-parent-idx-返回它是第几个孩子"><a href="#4-lv-obj-get-child-parent-idx-返回它是第几个孩子" class="headerlink" title="4.lv_obj_get_child(parent, idx)返回它是第几个孩子"></a>4.lv_obj_get_child(parent, idx)返回它是第几个孩子</h6><ul>
+<li><code>0</code> get the child created first</li>
+<li><code>1</code> get the child created second</li>
+<li><code>-1</code> get the child created last</li>
+</ul>
+<p>对其的模式<br><img src="https://dougie2111.github.io/pic/image-20231006232011505.png" alt="image-20231006232011505"></p>
+<h1 id="2-颜色"><a href="#2-颜色" class="headerlink" title="2.颜色"></a>2.颜色</h1><p>区别：add是有mode的，set无；</p>
+<h6 id="1-颜色lv-obj-set-style-bg-color-对象-lv-color-hex-16bit颜色-状态（LV-STATE-PRESSED）-设置部件的样式"><a href="#1-颜色lv-obj-set-style-bg-color-对象-lv-color-hex-16bit颜色-状态（LV-STATE-PRESSED）-设置部件的样式" class="headerlink" title="1.颜色lv_obj_set_style_bg_color(对象,lv_color_hex(16bit颜色),状态（LV_STATE_PRESSED）);&#x2F;&#x2F;设置部件的样式"></a>1.颜色lv_obj_set_style_bg_color(对象,lv_color_hex(16bit颜色),状态（LV_STATE_PRESSED）);&#x2F;&#x2F;设置部件的样式</h6><h6 id="2-lv-color-hex（颜色）参数填入颜色转化为所选的颜色编码"><a href="#2-lv-color-hex（颜色）参数填入颜色转化为所选的颜色编码" class="headerlink" title="2.lv_color_hex（颜色）参数填入颜色转化为所选的颜色编码"></a>2.lv_color_hex（颜色）参数填入颜色转化为所选的颜色编码</h6><h6 id="3-lv-obj-add-style-对象-全局style-状态"><a href="#3-lv-obj-add-style-对象-全局style-状态" class="headerlink" title="3.	lv_obj_add_style(对象,全局style,状态);"></a>3.	lv_obj_add_style(对象,全局style,状态);</h6><p>代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">lv_style_t</span> mode1;  <span class="comment">//定义颜色结构体</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">style_set</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">lv_style_init(&amp;mode1); <span class="comment">//初始化</span></span><br><span class="line">lv_style_set_bg_color(&amp;mode1,lv_color_hex(<span class="number">0xdea0fe</span>));   <span class="comment">//给其定义颜色</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="3-边框和轮廓"><a href="#3-边框和轮廓" class="headerlink" title="3.边框和轮廓"></a>3.边框和轮廓</h1><p>边框（outline） <strong>包裹</strong>   轮廓（border）</p>
+<h1 id="4-部分"><a href="#4-部分" class="headerlink" title="4.部分"></a>4.部分</h1><p><img src="/pit/image-20231008180545688.png" alt="image-20231008180545688"></p>
+<h1 id="5-尺寸"><a href="#5-尺寸" class="headerlink" title="5.尺寸"></a>5.尺寸</h1><p>如下是设置高度，lv_pct（0-100）是与其夫的大小进行设置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_obj_set_height(obj, lv_pct(<span class="number">100</span>));</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-事件"><a href="#6-事件" class="headerlink" title="6.事件"></a>6.事件</h1><h6 id="1-去掉事件回调函数"><a href="#1-去掉事件回调函数" class="headerlink" title="1.去掉事件回调函数"></a>1.去掉事件回调函数</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_obj_remove_event_cb(对象,回调函数);</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-添加回调函数"><a href="#2-添加回调函数" class="headerlink" title="2.添加回调函数"></a>2.添加回调函数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_obj_add_event_cb(对象, 回调函数, 触发的状态, 用户指针（一般为NULL）);</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-手动触发事件"><a href="#3-手动触发事件" class="headerlink" title="3.手动触发事件"></a>3.手动触发事件</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*Simulate the press of the first button (indexes start from zero)*/</span><br><span class="line">uint32_t btn_id = 0;</span><br><span class="line">lv_event_send(obj, 事件的宏定义, &amp;数据的地址);</span><br></pre></td></tr></table></figure>
+
+<h6 id="xxxx-刷新事件LV-EVENT-REFRESH"><a href="#xxxx-刷新事件LV-EVENT-REFRESH" class="headerlink" title="xxxx.刷新事件LV_EVENT_REFRESH"></a>xxxx.刷新事件LV_EVENT_REFRESH</h6><h6 id="4-获取事件类型"><a href="#4-获取事件类型" class="headerlink" title="4.获取事件类型"></a>4.获取事件类型</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_event_get_code(触发源);  //获取触发的状态   </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="5-触发引起判断"><a href="#5-触发引起判断" class="headerlink" title="5.触发引起判断"></a>5.触发引起判断</h6><p>target，触发后指针不会改变，current返回当前的触发源</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_event_get_target(指向目标的指针) </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_event_get_current_target(指向目标的指针)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> lv_obj_t * target = lv_event_get_target(e);       //只触发一次，再次触发跳出函数</span><br><span class="line">lv_obj_t * cont = lv_event_get_current_target(e);</span><br><span class="line">if(target == cont) return;</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-分析代码"><a href="#6-分析代码" class="headerlink" title="6.分析代码"></a>6.分析代码</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">event_cb</span><span class="params">(<span class="type">lv_event_t</span> * e)</span></span><br><span class="line">&#123;</span><br><span class="line">    LV_LOG_USER(<span class="string">&quot;Clicked&quot;</span>);                                        <span class="comment">//需要自己设计函数，在lv_log.h中设置宏定义为1</span></span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> <span class="type">uint32_t</span> cnt = <span class="number">1</span>;		</span><br><span class="line">    <span class="type">lv_obj_t</span> * btn = lv_event_get_target(e);						<span class="comment">//获取触发源，也就是btn，指针btn指向btn。</span></span><br><span class="line">    <span class="type">lv_obj_t</span> * label = lv_obj_get_child(btn, <span class="number">0</span>);					<span class="comment">//获取btn的第一个孩子也就是Label，指向其，为后面编辑文本</span></span><br><span class="line">    lv_label_set_text_fmt(label, <span class="string">&quot;%&quot;</span>LV_PRIu32, cnt);				<span class="comment">//改变文本</span></span><br><span class="line">    cnt++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Add click event to a button</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">lv_example_event_1</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * btn = lv_btn_create(lv_scr_act());   				<span class="comment">//创建一个btn</span></span><br><span class="line">    lv_obj_set_size(btn, <span class="number">100</span>, <span class="number">50</span>);  								<span class="comment">//设置大小	</span></span><br><span class="line">    lv_obj_center(btn);												<span class="comment">//放置在中间</span></span><br><span class="line">    lv_obj_add_event_cb(btn, event_cb, LV_EVENT_CLICKED, <span class="literal">NULL</span>);		<span class="comment">//创建回调函数，由btn的状态触发，触发条件为LV_EVENT_CLICKED</span></span><br><span class="line"></span><br><span class="line">    <span class="type">lv_obj_t</span> * label = lv_label_create(btn);						<span class="comment">//在btn上面创建一个labele文本</span></span><br><span class="line">    lv_label_set_text(label, <span class="string">&quot;Click me!&quot;</span>);							<span class="comment">//写入内容</span></span><br><span class="line">    lv_obj_center(label);											<span class="comment">//放置在中间</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-style"><a href="#7-style" class="headerlink" title="7.style"></a>7.style</h1><h6 id="圆弧的函数"><a href="#圆弧的函数" class="headerlink" title="圆弧的函数"></a>圆弧的函数</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_style_set_arc_color(&amp;style, lv_palette_main(LV_PALETTE_RED));</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-文本"><a href="#8-文本" class="headerlink" title="8.文本"></a>8.文本</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2><h6 id="文本的组成部分"><a href="#文本的组成部分" class="headerlink" title="文本的组成部分"></a>文本的组成部分</h6><ul>
+<li><p><code>LV_PART_MAIN</code> 使用所有典型的背景属性和文本属性。填充值可用于在文本和背景之间添加空间。</p>
+</li>
+<li><p><code>LV_PART_SCROLLBAR</code>当文本大于小部件的大小时显示的滚动条。</p>
+</li>
+<li><p><code>LV_PART_SELECTED</code><a target="_blank" rel="noopener" href="https://docs.lvgl.io/8.3/widgets/core/label.html#text-selection">告诉所选文本</a>的样式。只能使用<code>text_color</code>和样式属性。<code>bg_color</code></p>
+<h6 id="设置渐变方式"><a href="#设置渐变方式" class="headerlink" title="设置渐变方式"></a>设置渐变方式</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> lv_obj_set_style_bg_grad_dir(目标, 渐变方式, 状态);  //设置渐变方式的函数</span><br><span class="line">渐变方式如下：</span><br><span class="line"> LV_GRAD_DIR_NONE, //不开启渐变效果</span><br><span class="line"> LV_GRAD_DIR_VER,  //竖直渐变</span><br><span class="line"> LV_GRAD_DIR_HOR,  //水平渐变</span><br><span class="line">  </span><br><span class="line"> lv_obj_set_style_bg_color(grad, lv_color_hex(0xdea0fe), 0);    		//设置背景色（淡紫色）</span><br><span class="line"> lv_obj_set_style_bg_grad_color(grad, lv_color_hex(0x0065d6),0);		//渐变函数，由背景的颜色渐变为现在的颜色（蓝色）</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="设置文本和格式化显示文本"><a href="#设置文本和格式化显示文本" class="headerlink" title="设置文本和格式化显示文本"></a>设置文本和格式化显示文本</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lv_label_set_text(label, &quot;New text&quot;) 			//显示文本</span><br><span class="line">lv_label_set_text_fmt(label, &quot;Value: %d&quot;, 15)   //显示数值可以用这个</span><br></pre></td></tr></table></figure>
+
+<h6 id="文本的背景和大小颜色设置"><a href="#文本的背景和大小颜色设置" class="headerlink" title="文本的背景和大小颜色设置"></a>文本的背景和大小颜色设置</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lv_obj_set_style_text_color(对象，颜色，触发的机制（默认既改变颜色）)；</span><br><span class="line">lv_obj_set_style_text_opa(label,20,LV_STATE_DEFAULT); //改变背景透明度（背景颜色透明度默认为0）</span><br><span class="line">lv_obj_set_style_text_font(label,字体大小（默认14其它去开启宏定义才可用），触发的状态）;</span><br><span class="line">			 </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="文本上色（文本里面进行操作）"><a href="#文本上色（文本里面进行操作）" class="headerlink" title="文本上色（文本里面进行操作）"></a>文本上色（文本里面进行操作）</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lv_label_set_recolor(文本指针，true)开启文本上色功能</span><br><span class="line"> lv_label_set_text(label1, &quot;#0000ff Re-color# #ff00ff words# #ff0000 of a# label, align the lines to the center &quot;</span><br><span class="line">                      &quot;and wrap long text automatically.&quot;);</span><br></pre></td></tr></table></figure>
+
+<h6 id="文本滚动"><a href="#文本滚动" class="headerlink" title="文本滚动"></a>文本滚动</h6><p>默认情况下，标签的大小和文本同步，人为更改可以限制。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_label_set_long_mode(文本的指针，所选模式）</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    LV_LABEL_LONG_WRAP,             <span class="comment">//超出剪切</span></span><br><span class="line">    LV_LABEL_LONG_DOT,              <span class="comment">//最后三个字用...表示</span></span><br><span class="line">    LV_LABEL_LONG_SCROLL,           <span class="comment">//来回滚动</span></span><br><span class="line">    LV_LABEL_LONG_SCROLL_CIRCULAR,  <span class="comment">//循环滚动</span></span><br><span class="line">    LV_LABEL_LONG_CLIP,             <span class="comment">//直接剪切部件外的文本</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h6 id="获取对象的文本"><a href="#获取对象的文本" class="headerlink" title="获取对象的文本"></a>获取对象的文本</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_label_get_text（目标对象）   </span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="文本阴影设置"><a href="#文本阴影设置" class="headerlink" title="文本阴影设置"></a>文本阴影设置</h6><p>本质是通过设置一个文本透明度20，再设置一个同样的文本然后讲其相对于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void lv_example_label_2(void)</span><br><span class="line">&#123;</span><br><span class="line">    /*Create a style for the shadow*/</span><br><span class="line">    static lv_style_t style_shadow;</span><br><span class="line">    lv_style_init(&amp;style_shadow);</span><br><span class="line">    lv_style_set_text_opa(&amp;style_shadow, LV_OPA_30);</span><br><span class="line">    lv_style_set_text_color(&amp;style_shadow, lv_color_black());</span><br><span class="line"></span><br><span class="line">    /*Create a label for the shadow first (it&#x27;s in the background)*/</span><br><span class="line">    lv_obj_t * shadow_label = lv_label_create(lv_scr_act());</span><br><span class="line">    lv_obj_add_style(shadow_label, &amp;style_shadow, 0);</span><br><span class="line"></span><br><span class="line">    /*Create the main label*/</span><br><span class="line">    lv_obj_t * main_label = lv_label_create(lv_scr_act());</span><br><span class="line">    lv_label_set_text(main_label, &quot;A simple method to create\n&quot;</span><br><span class="line">                      &quot;shadows on a text.\n&quot;</span><br><span class="line">                      &quot;It even works with\n\n&quot;</span><br><span class="line">                      &quot;newlines     and spaces.&quot;);</span><br><span class="line"></span><br><span class="line">    /*Set the same text for the shadow label*/</span><br><span class="line">    lv_label_set_text(shadow_label, lv_label_get_text(main_label));</span><br><span class="line"></span><br><span class="line">    /*Position the main label*/</span><br><span class="line">    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, 0);</span><br><span class="line"></span><br><span class="line">    /*Shift the second label down and to the right by 2 pixel*/</span><br><span class="line">    lv_obj_align_to(shadow_label, main_label, LV_ALIGN_TOP_LEFT, 2, 2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-按键"><a href="#9-按键" class="headerlink" title="9.按键"></a>9.按键</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lv_obj_add_flag(btn2, LV_OBJ_FLAG_CHECKABLE);  //开启按键值切换类似toggle</span><br></pre></td></tr></table></figure>
+
+<h1 id="10-按键矩阵"><a href="#10-按键矩阵" class="headerlink" title="10.按键矩阵"></a>10.按键矩阵</h1><p>按键矩阵有利于节省空间，相比于再新创建一个按钮，会节约越250个字节左右</p>
+<h6 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h6><ul>
+<li><code>LV_PART_MAIN </code>  按钮矩阵的背景</li>
+<li><code>pad_row</code>（行）<code>pad_column</code>（列）设置按钮之间的空间。</li>
+<li><code>LV_PART_ITEMS</code>按钮都使用文本和典型的背景样式属性。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lv_btnmatrix_set_map(btnm, my_map) 					 <span class="comment">//设置按键矩阵</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> * <span class="built_in">map</span>[] = &#123;<span class="string">&quot;btn1&quot;</span>, <span class="string">&quot;btn2&quot;</span>, <span class="string">&quot;btn3&quot;</span>, <span class="literal">NULL</span>&#125;  <span class="comment">//数组的最后一位为NULL or &quot;&quot;;</span></span><br><span class="line"><span class="comment">//回车能够起到换行作用，也就是讲按键分成两行。Use &quot;\n&quot; in the map to insert a line break</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="11-开关"><a href="#11-开关" class="headerlink" title="11.开关"></a>11.开关</h1><p>组成部分</p>
+<ul>
+<li><code>LV_PART_MAIN</code>开关关闭的背景</li>
+<li><code>LV_PART_INDICATOR</code>显示开关开启的背景</li>
+<li><code>LV_PART_KNOB</code>在指示器左侧或右侧绘制的矩形（或圆形）。还使用所有典型的背景属性来描述旋钮。默认情况下，旋钮是方形的（具有可选的角半径），边长等于滑块的较小边。旋钮可以随着<code>padding</code>数值变大。填充值也可以是不对称的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="输入设备事件"><a href="#输入设备事件" class="headerlink" title="输入设备事件"></a>输入设备事件</h3><ul>
+<li><code>LV_EVENT_PRESSED</code> 按下触发触发</li>
+<li><code>LV_EVENT_PRESSING</code> 物体被按下（按下时连续调用）</li>
+<li><code>LV_EVENT_PRESS_LOST</code> 仍然按下某个对象，但将光标&#x2F;手指滑离该对象</li>
+<li><code>LV_EVENT_SHORT_CLICKED</code> 物体被按下一小段时间，然后松开。如果滚动则不会被调用。</li>
+<li><code>LV_EVENT_LONG_PRESSED</code>至少已按下<code>long_press_time</code>输入设备驱动程序中指定的对象。如果滚动则不会被调用。</li>
+<li><code>LV_EVENT_LONG_PRESSED_REPEAT``long_press_time</code>每毫秒 调用一次<code>long_press_repeat_time</code>。如果滚动则不会被调用。</li>
+<li><code>LV_EVENT_CLICKED</code> 按下松开触发</li>
+<li><code>LV_EVENT_RELEASED</code> 在释放对象时在每种情况下调用</li>
+<li><code>LV_EVENT_SCROLL_BEGIN</code>滚动开始。事件参数是<code>NULL</code>一个滚动动画描述符，可以根据需要进行修改。<code>lv_anim_t *</code></li>
+<li><code>LV_EVENT_SCROLL_END</code> 滚动结束。</li>
+<li><code>LV_EVENT_SCROLL</code> 对象被滚动</li>
+<li><code>LV_EVENT_GESTURE</code> 检测到手势。获取手势<code>lv_indev_get_gesture_dir(lv_indev_get_act());</code></li>
+<li><code>LV_EVENT_KEY</code> 密钥被发送到对象。获取钥匙<code>lv_indev_get_key(lv_indev_get_act());</code></li>
+<li><code>LV_EVENT_FOCUSED</code> 一个物体被聚焦</li>
+<li><code>LV_EVENT_DEFOCUSED</code> 物体没有聚焦</li>
+<li><code>LV_EVENT_LEAVE</code> 对象未聚焦但仍处于选中状态</li>
+<li><code>LV_EVENT_HIT_TEST</code> 执行高级命中测试。使用并检查是否可以单击该对象。如果没有设置<code>lv_hit_test_info_t * a = lv_event_get_hit_test_info(e)``a-&gt;point``a-&gt;res = false</code></li>
+</ul>
+<h3 id="状态的定义"><a href="#状态的定义" class="headerlink" title="状态的定义"></a>状态的定义</h3><ol>
+<li><p><code>LV_STATE_DEFAULT</code>：默认状态，通常表示对象的普通状态，没有特殊行为。</p>
+</li>
+<li><p><code>LV_STATE_CHECKED</code>：表示对象已被选中或选中状态。</p>
+</li>
+<li><p><code>LV_STATE_FOCUSED</code>：表示对象处于焦点状态，通常用于输入对象（例如文本输入框）。</p>
+</li>
+<li><p><code>LV_STATE_FOCUS_KEY</code>：表示对象处于键盘焦点状态，通常与焦点状态一起使用。</p>
+</li>
+<li><p><code>LV_STATE_EDITED</code>：表示对象已被编辑或正在编辑状态，通常与输入对象一起使用。</p>
+</li>
+<li><p><code>LV_STATE_HOVERED</code>：表示鼠标悬停在对象上的状态。</p>
+</li>
+<li><p><code>LV_STATE_PRESSED</code>：表示对象被按下的状态，通常用于按钮等交互对象。</p>
+</li>
+<li><p><code>LV_STATE_SCROLLED</code>：表示对象正在滚动的状态，通常用于滚动视图等对象。</p>
+</li>
+<li><p><code>LV_STATE_DISABLED</code>：表示对象被禁用的状态，通常用于不可交互的对象。</p>
+</li>
+<li><p><code>LV_STATE_USER_1</code>、<code>LV_STATE_USER_2</code>、<code>LV_STATE_USER_3</code>、<code>LV_STATE_USER_4</code>：这些是用户自定义的状态，您可以根据需要自由使用它们。</p>
+</li>
+<li><p><code>LV_STATE_ANY</code>：特殊值，用于表示所有状态的组合，通常用于一次性应用样式到所有状</p>
+</li>
+</ol>
+<h3 id="对象标志"><a href="#对象标志" class="headerlink" title="对象标志"></a>对象标志</h3><ol>
+<li><code>LV_OBJ_FLAG_HIDDEN</code>：使对象隐藏，就像它根本不存在一样。</li>
+<li><code>LV_OBJ_FLAG_CLICKABLE</code>：使对象可以被输入设备点击。</li>
+<li><code>LV_OBJ_FLAG_CLICK_FOCUSABLE</code>：当点击对象时，将为对象添加焦点状态。</li>
+<li><code>LV_OBJ_FLAG_CHECKABLE</code>：当点击对象时，切换对象的选中状态。</li>
+<li><code>LV_OBJ_FLAG_SCROLLABLE</code>：使对象具有可滚动的功能。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_ELASTIC</code>：允许在对象内部滚动，但滚动速度较慢。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_MOMENTUM</code>：当”抛”滚动时，使对象进一步滚动。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_ONE</code>：只允许滚动一个可捕捉的子对象。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_CHAIN_HOR</code>：允许水平滚动在父对象中传播。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_CHAIN_VER</code>：允许垂直滚动在父对象中传播。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_CHAIN</code>：允许滚动在水平和垂直方向上在父对象中传播。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_ON_FOCUS</code>：当对象获得焦点时，自动滚动对象以使其可见。</li>
+<li><code>LV_OBJ_FLAG_SCROLL_WITH_ARROW</code>：允许使用箭头键滚动焦点对象。</li>
+<li><code>LV_OBJ_FLAG_SNAPPABLE</code>：如果在父对象上启用了滚动捕捉，可以捕捉到该对象。</li>
+<li><code>LV_OBJ_FLAG_PRESS_LOCK</code>：即使按下事件从对象滑出，也保持对象处于按下状态。</li>
+<li><code>LV_OBJ_FLAG_EVENT_BUBBLE</code>：将事件传递到父对象。</li>
+<li><code>LV_OBJ_FLAG_GESTURE_BUBBLE</code>：将手势传递到父对象。</li>
+<li><code>LV_OBJ_FLAG_ADV_HITTEST</code>：允许执行更准确的点击测试，考虑到圆角等因素。</li>
+<li><code>LV_OBJ_FLAG_IGNORE_LAYOUT</code>：允许布局管理器调整对象的位置。</li>
+<li><code>LV_OBJ_FLAG_FLOATING</code>：当父对象滚动时，不滚动该对象，并忽略布局。</li>
+<li><code>LV_OBJ_FLAG_OVERFLOW_VISIBLE</code>：不要裁剪子对象的内容以适应父对象的边界。</li>
+</ol>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/2023/10/23/esp32-s3%E5%BC%95%E8%84%9A/"
+      title="ESP32学习"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        ESP32学习
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right  disabled "
+     >
+
+    <p class="title-text">
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+                    </div>
+                    <div id="footer-wrapper">
+                      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2024 Dougie<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+                    </div>
+                    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+                </div>
+                <meting-js server="netease" type="song" id="2606516847" fixed="true" autoplay="true" volume="0.3"></meting-js>
+                <script src="/js/light-dark-switch.js"></script>
+  </body>
+
+  </html>
